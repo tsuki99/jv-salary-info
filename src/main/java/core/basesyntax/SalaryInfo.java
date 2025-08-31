@@ -18,6 +18,7 @@ public class SalaryInfo {
         for (int i = 0; i < names.length; i++) {
 
             int salary = 0;
+            boolean isNameFound = false;
 
             for (int j = 0; j < data.length; j++) {
                 if (hasRequiredName(names[i], data[j])) {
@@ -31,13 +32,19 @@ public class SalaryInfo {
                     if (isNameAndDateMatch(names[i], name, date, dateFrom, dateTo)) {
                         salary += getSalary(workHours, incomePerHour);
                     }
+                    isNameFound = true;
                 }
             }
 
-            report.append(names[i])
-                    .append(HYPHEN)
-                    .append(salary)
-                    .append(System.lineSeparator());
+            if (isNameFound) {
+                report.append(names[i])
+                        .append(HYPHEN)
+                        .append(salary)
+                        .append(System.lineSeparator());
+            } else {
+                throw new NameNotFoundException("Name '" + names[i]
+                        + "' doesn't exist in array data");
+            }
         }
 
         return report.toString().trim();
