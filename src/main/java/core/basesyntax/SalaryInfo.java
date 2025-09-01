@@ -12,13 +12,15 @@ public class SalaryInfo {
 
     public String getSalaryInfo(String[] names, String[] data, String dateFrom, String dateTo) {
         String[] splittedData;
-        StringBuilder report = new StringBuilder("Report for period "
-                + dateFrom + HYPHEN + dateTo + System.lineSeparator());
+        StringBuilder report = new StringBuilder("Report for period ");
+        report.append(dateFrom)
+                .append(HYPHEN)
+                .append(dateTo)
+                .append(System.lineSeparator());
 
         for (int i = 0; i < names.length; i++) {
 
             int salary = 0;
-            boolean isNameFound = false;
 
             for (int j = 0; j < data.length; j++) {
                 if (hasRequiredName(names[i], data[j])) {
@@ -32,19 +34,12 @@ public class SalaryInfo {
                     if (isNameAndDateMatch(names[i], name, date, dateFrom, dateTo)) {
                         salary += getSalary(workHours, incomePerHour);
                     }
-                    isNameFound = true;
                 }
             }
-
-            if (isNameFound) {
-                report.append(names[i])
-                        .append(HYPHEN)
-                        .append(salary)
-                        .append(System.lineSeparator());
-            } else {
-                throw new NameNotFoundException("Name '" + names[i]
-                        + "' doesn't exist in array data");
-            }
+            report.append(names[i])
+                    .append(HYPHEN)
+                    .append(salary)
+                    .append(System.lineSeparator());
         }
 
         return report.toString().trim();
